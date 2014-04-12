@@ -71,6 +71,18 @@ function TrackViewModel() {
     self.toggleRegions = function() {
         $("#region-list").slideToggle();
     };
+
+    self.toggleAlternateTracks = function() {
+        if (self.retrievedTracks().length <= 1) {
+            return;
+        }
+        $("#alternate-tracks").slideToggle();
+    };
+
+    self.selectAlternateTrack = function(alternateTrack) {
+        self.toggleAlternateTracks();
+        self.selectedTrack(alternateTrack);
+    };
 }
 
 $(function() {

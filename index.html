@@ -25,6 +25,7 @@
           <input type="submit" style="display: none;" />
         </form>
       </div>
+
       <div class="track-details-pane row center-text" data-bind="visible: searchCompleted">
         <div data-bind="visible: trackNotOnSpotify">
           <h1>
@@ -33,22 +34,35 @@
             doesn't seem to be available.
           </h1>
         </div>
+
         <div data-bind="visible: trackOnSpotify, with: selectedTrack">
           <h1>
             Yep!
-            <span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedTracks().length > 1 }"></span>
+            <span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedTracks().length > 1 }, click: $parent.toggleAlternateTracks"></span>
             by
             <span class="highlight" data-bind="text: artist"></span>
             (from
-            <span class="highlight" data-bind="text: album"></span>)
-            is available in
+            <span class="highlight" data-bind="text: album"></span>) is available in
             <span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
             regions.
           </h1>
+
           <div id="region-list" style="display: none;">
-            <h3>Here're all the places where it can be heard.</h3>
+            <h2>Here're all the places where it can be heard.</h2>
             <div data-bind="foreach: regions">
-              <p data-bind="text: $data"></p>
+              <h4 data-bind="text: $data"></h4>
+            </div>
+          </div>
+
+          <div id="alternate-tracks" style="display: none;">
+            <h2>Not what you're looking for? Here are some other tracks we found.</h2>
+            <div data-bind="foreach: $root.retrievedTracks">
+              <h4 class="alternate-track" data-bind="click: $root.selectAlternateTrack">
+                <span data-bind="text: title"></span>
+                -
+                <span data-bind="text: artist"></span>
+                (<span data-bind="text: album"></span>)
+              </h4>
             </div>
           </div>
         </div>
