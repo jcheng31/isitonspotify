@@ -2,6 +2,7 @@ function TrackViewModel() {
     var self = this;
 
     self.givenTrackName = ko.observable("");
+    self.submittedTrackName = ko.observable("");
 
     self.selectedTrack = ko.observable({});
 
@@ -18,6 +19,7 @@ function TrackViewModel() {
 
     self.getTrackAvailability = function(formElement) {
         self.searchCompleted(false);
+        self.submittedTrackName(self.givenTrackName());
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + self.givenTrackName();
         $.ajax(searchTargetUrl).done(function(data) {

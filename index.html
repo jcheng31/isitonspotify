@@ -27,7 +27,9 @@
       <div class="track-details-pane row" data-bind="visible: searchCompleted">
         <div data-bind="visible: trackNotOnSpotify">
           <h1>
-            Nope, that track isn't available.
+            Nope,
+            <span class="highlight" data-bind="text: submittedTrackName"></span>
+            doesn't seem to be available.
           </h1>
         </div>
         <div data-bind="visible: trackOnSpotify, with: selectedTrack">
