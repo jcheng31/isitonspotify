@@ -12,16 +12,20 @@
 <body>
   <div class="container">
     <div class="row">
-      <h1 class="col-md-10 col-md-offset-1">
-        Where is
-        <input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
-        <a>available on Spotify?</a>
-      </h1>
+      <form data-bind="submit: getTrackAvailability">
+        <!-- TODO: more responsiveness. -->
+        <h1 class="col-md-10 col-md-offset-1">
+          Where is
+          <input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
+          available on Spotify?
+        </h1>
+        <input type="submit" style="display: none;" />
+      </form>
     </div>
-    <div class="row">
-      <h3 data-bind="value: trackTitle"></h3>
-      <h3 data-bind="value: trackArtist"></h3>
-      <h3 data-bind="value: trackAvailability"></h3>
+    <div class="track-details-pane row">
+      <h3 data-bind="text: trackTitle"></h3>
+      <h3 data-bind="text: trackArtist"></h3>
+      <h3 data-bind="text: trackAvailability"></h3>
     </div>
   </div>
 
