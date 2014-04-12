@@ -7,6 +7,14 @@
 .track-detail:hover {
     cursor: pointer;
 }
+.alternate-track {
+    margin: -10px;
+    padding: 10px;
+}
+.alternate-track:hover {
+    cursor: pointer;
+    background: #ebfafe;
+}
 @media(min-width: 640px) {
     .center-text {
         text-align: center;
