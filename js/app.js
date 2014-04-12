@@ -4,9 +4,7 @@ function TrackViewModel() {
     self.givenTrackName = ko.observable("");
     self.selectedTrack = ko.observable({});
     self.retrievedTracks = ko.observableArray([]);
-    self.trackOnSpotify = ko.computed(function() {
-        return self.retrievedTracks().length > 0;
-    });
+    self.trackOnSpotify = ko.observable(false);
 
     self.getTrackAvailability = function(formElement) {
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
@@ -14,6 +12,7 @@ function TrackViewModel() {
         $.ajax(searchTargetUrl).done(function(data) {
         	self.retrievedTracks(data.tracks);
             var foundTracks = data.tracks.length > 0;
+            self.trackOnSpotify(foundTracks);
             if (!foundTracks) {
                 return;
             }
