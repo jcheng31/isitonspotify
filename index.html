@@ -36,7 +36,7 @@
         <div data-bind="visible: trackOnSpotify, with: selectedTrack">
           <h1>
             Yep!
-            <span class="highlight track-detail" data-bind="text: title"></span>
+            <span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedTracks().length > 1 }"></span>
             by
             <span class="highlight" data-bind="text: artist"></span>
             (from
