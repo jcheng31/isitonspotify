@@ -1,6 +1,9 @@
 .highlight {
   color: #0ca3cd;
 }
+.track-detail {
+  border-bottom: 1px dotted;
+}
 
 .region-map {
   height: 600px;
