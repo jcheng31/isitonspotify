@@ -53,6 +53,7 @@ function TrackViewModel() {
             self.selectedTrack({
                 title: trackTitle,
                 artist: trackArtist,
+                album: album.name,
                 numberOfRegions: countries.length,
                 regions: countries.sort()
             });
