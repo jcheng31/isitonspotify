@@ -22,7 +22,7 @@ function TrackViewModel() {
         if (self.givenTrackName().length === 0) {
             return;
         }
-        
+
         self.submittedTrackName(self.givenTrackName());
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + self.givenTrackName();
@@ -41,14 +41,26 @@ function TrackViewModel() {
 
             var album = track.album;
             var rawAvailabilityString = album.availability.territories;
-            var availability = rawAvailabilityString.split(" ");
+            var countryCodes = rawAvailabilityString.split(" ");
+
+            var countries = [];
+            for (var i = 0; i < countryCodes.length; i++) {
+                var countryCode = countryCodes[i];
+                var country = countryDictionary[countryCode];
+                countries.push(country);
+            }
 
             self.selectedTrack({
                 title: trackTitle,
                 artist: trackArtist,
-                numberOfRegions: availability.length
+                numberOfRegions: countries.length,
+                regions: countries.sort()
             });
         });
+    };
+
+    self.toggleRegions = function() {
+        $("#region-list").slideToggle();
     };
 }
 

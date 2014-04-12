@@ -4,6 +4,7 @@
 <head>
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+  <script type="text/javascript" src="./js/countries.js"></script>
   <script type="text/javascript" src="./js/app.js"></script>
   <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="./css/main.css">
@@ -39,9 +40,15 @@
             by
             <span class="highlight" data-bind="text: artist"></span>
             is available in
-            <span class="highlight track-detail" data-bind="text: numberOfRegions"></span>
+            <span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
             regions.
           </h1>
+          <div id="region-list" style="display: none;">
+            <h3>Here're all the regions where the track can be found.</h3>
+            <div data-bind="foreach: regions">
+              <p data-bind="text: $data"></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
