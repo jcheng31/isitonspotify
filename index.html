@@ -11,27 +11,29 @@
 
 <body>
   <div class="container">
-    <div class="row">
-      <form data-bind="submit: getTrackAvailability">
-        <!-- TODO: more responsiveness. -->
-        <h1 class="col-md-10 col-md-offset-1">
-          Where is
-          <input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
-          available on Spotify?
-        </h1>
-        <input type="submit" style="display: none;" />
-      </form>
-    </div>
-    <div class="track-details-pane row" data-bind="with: selectedTrack">
-      <h3>Track:
-        <span data-bind="text: title"></span>
-      </h3>
-      <h3>Artist:
-        <span data-bind="text: artist"></span>
-      </h3>
-      <h3>Available in:</h3>
-      <div data-bind="foreach: regions">
-        <p data-bind="text: $data"></p>
+    <div class="row col-md-10 col-md-offset-1">
+      <div class="row">
+        <form data-bind="submit: getTrackAvailability">
+          <!-- TODO: more responsiveness. -->
+          <h1>
+            Where is
+            <input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
+            available on Spotify?
+          </h1>
+          <input type="submit" style="display: none;" />
+        </form>
+      </div>
+      <div class="track-details-pane row" data-bind="with: selectedTrack">
+        <h3>Track:
+          <span data-bind="text: title"></span>
+        </h3>
+        <h3>Artist:
+          <span data-bind="text: artist"></span>
+        </h3>
+        <h3>Available in:</h3>
+        <div data-bind="foreach: regions">
+          <p data-bind="text: $data"></p>
+        </div>
       </div>
     </div>
   </div>
