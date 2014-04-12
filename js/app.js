@@ -30,18 +30,11 @@ function TrackViewModel() {
                 artist: trackArtist,
                 numberOfRegions: availability.length
             });
-
-            $('.region-map').vectorMap({
-                map: 'world_mill_en',
-                selectedRegions: availability
-            });
         });
     };
 }
 
 $(function() {
-
     var viewModel = new TrackViewModel();
-
     ko.applyBindings(viewModel);
 });
