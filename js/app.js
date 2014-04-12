@@ -19,6 +19,10 @@ function TrackViewModel() {
 
     self.getTrackAvailability = function(formElement) {
         self.searchCompleted(false);
+        if (self.givenTrackName().length === 0) {
+            return;
+        }
+        
         self.submittedTrackName(self.givenTrackName());
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + self.givenTrackName();
