@@ -1,5 +1,5 @@
 function TrackViewModel() {
-	var self = this;
+    var self = this;
 
     self.givenTrackName = ko.observable("");
     self.selectedTrack = ko.observable({});
@@ -10,7 +10,7 @@ function TrackViewModel() {
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + this.givenTrackName();
         $.ajax(searchTargetUrl).done(function(data) {
-        	self.retrievedTracks(data.tracks);
+            self.retrievedTracks(data.tracks);
             var foundTracks = data.tracks.length > 0;
             self.trackOnSpotify(foundTracks);
             if (!foundTracks) {
@@ -28,8 +28,12 @@ function TrackViewModel() {
             self.selectedTrack({
                 title: trackTitle,
                 artist: trackArtist,
-                regions: availability,
                 numberOfRegions: availability.length
+            });
+
+            $('.region-map').vectorMap({
+                map: 'world_mill_en',
+                selectedRegions: availability
             });
         });
     };
