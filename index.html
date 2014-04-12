@@ -6,8 +6,9 @@
   <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
   <script type="text/javascript" src="./js/jquery-jvectormap-1.2.2.min.js"></script>
   <script type="text/javascript" src="./js/app.js"></script>
-  <link rel="stylesheet" type="text/css" href="./css/jquery-jvectormap-1.2.2.css">
   <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
   <title>Is that track on Spotify?</title>
 </head>
 
@@ -26,20 +27,18 @@
         </form>
       </div>
       <div class="track-details-pane row" data-bind="visible: trackOnSpotify, with: selectedTrack">
-        <h3>Track:
-          <span data-bind="text: title"></span>
-        </h3>
-        <h3>Artist:
-          <span data-bind="text: artist"></span>
-        </h3>
-        <h3>Available in:</h3>
-        <div data-bind="foreach: regions">
-          <p data-bind="text: $data"></p>
-        </div>
+        <h1>
+          Yep!
+          <span class="track-detail" data-bind="text: title"></span>
+          by
+          <span class="track-detail" data-bind="text: artist"></span>
+          is available in
+          <span class="track-detail" data-bind="text: numberOfRegions"></span>
+          regions.
+        </h1>
       </div>
     </div>
   </div>
-
 </body>
 
 </html>

@@ -7,6 +7,7 @@ function TrackViewModel() {
     self.trackOnSpotify = ko.computed(function() {
         return self.retrievedTracks().length > 0;
     });
+
     self.getTrackAvailability = function(formElement) {
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + this.givenTrackName();
@@ -28,7 +29,8 @@ function TrackViewModel() {
             self.selectedTrack({
                 title: trackTitle,
                 artist: trackArtist,
-                regions: availability
+                regions: availability,
+                numberOfRegions: availability.length
             });
         });
     };
