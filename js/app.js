@@ -3,9 +3,8 @@ $(function() {
 
     var viewModel = {
         givenTrackName: ko.observable(""),
-        trackTitle: ko.observable(""),
-        trackArtist: ko.observable(""),
-        trackAvailability: ko.observableArray([]),
+        selectedTrack: ko.observable({}),
+        retrievedTracks: ko.observableArray([]),
         getTrackAvailability: function(formElement) {
             var searchTargetUrl = spotifySearchEndpoint + this.givenTrackName();
             var that = this;
@@ -22,13 +21,13 @@ $(function() {
                 var album = track.album;
                 var rawAvailabilityString = album.availability.territories;
                 var availability = rawAvailabilityString.split(" ");
-                that.updateTrackDetails(trackTitle, trackArtist, availability);
+
+                that.selectedTrack({
+                	title: trackTitle,
+                	artist: trackArtist,
+                	regions: availability
+                });
             });
-        },
-        updateTrackDetails: function(trackTitle, trackArtist, trackAvailability) {
-            this.trackTitle(trackTitle);
-            this.trackArtist(trackArtist);
-            this.trackAvailability(trackAvailability);
         }
     };
 
