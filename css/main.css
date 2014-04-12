@@ -1,12 +1,14 @@
 .highlight {
-  color: #0ca3cd;
+    color: #0ca3cd;
 }
 .track-detail {
-  border-bottom: 1px dotted;
+    border-bottom: 1px dotted;
 }
 .track-detail:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
-.center-text {
-  text-align: center;
+@media(min-width: 640px) {
+    .center-text {
+        text-align: center;
+    }
 }
