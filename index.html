@@ -25,7 +25,7 @@
           <input type="submit" style="display: none;" />
         </form>
       </div>
-      <div class="track-details-pane row" data-bind="with: selectedTrack">
+      <div class="track-details-pane row" data-bind="visible: trackOnSpotify, with: selectedTrack">
         <h3>Track:
           <span data-bind="text: title"></span>
         </h3>

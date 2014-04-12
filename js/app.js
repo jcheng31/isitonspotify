@@ -1,35 +1,42 @@
-$(function() {
-    var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
+function TrackViewModel() {
+	var self = this;
 
-    var viewModel = {
-        givenTrackName: ko.observable(""),
-        selectedTrack: ko.observable({}),
-        retrievedTracks: ko.observableArray([]),
-        getTrackAvailability: function(formElement) {
-            var searchTargetUrl = spotifySearchEndpoint + this.givenTrackName();
-            var that = this;
-            $.ajax(searchTargetUrl).done(function(data) {
-                var retrievedTracks = data.tracks.length > 0;
-                if (!retrievedTracks) {
-                    return;
-                }
+    self.givenTrackName = ko.observable("");
+    self.selectedTrack = ko.observable({});
+    self.retrievedTracks = ko.observableArray([]);
+    self.trackOnSpotify = ko.computed(function() {
+        return self.retrievedTracks().length > 0;
+    });
+    self.getTrackAvailability = function(formElement) {
+        var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
+        var searchTargetUrl = spotifySearchEndpoint + this.givenTrackName();
+        $.ajax(searchTargetUrl).done(function(data) {
+        	self.retrievedTracks(data.tracks);
+            var foundTracks = data.tracks.length > 0;
+            if (!foundTracks) {
+                return;
+            }
 
-                var track = data.tracks[0];
-                var trackTitle = track.name;
-                var trackArtist = track.artists[0].name;
+            var track = data.tracks[0];
+            var trackTitle = track.name;
+            var trackArtist = track.artists[0].name;
 
-                var album = track.album;
-                var rawAvailabilityString = album.availability.territories;
-                var availability = rawAvailabilityString.split(" ");
+            var album = track.album;
+            var rawAvailabilityString = album.availability.territories;
+            var availability = rawAvailabilityString.split(" ");
 
-                that.selectedTrack({
-                	title: trackTitle,
-                	artist: trackArtist,
-                	regions: availability
-                });
+            self.selectedTrack({
+                title: trackTitle,
+                artist: trackArtist,
+                regions: availability
             });
-        }
+        });
     };
+}
+
+$(function() {
+
+    var viewModel = new TrackViewModel();
 
     ko.applyBindings(viewModel);
 });
