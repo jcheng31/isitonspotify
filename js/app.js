@@ -1,3 +1,24 @@
+function Track(track) {
+    this.title = track.name;
+    this.artist = track.artists[0].name;
+
+    var album = track.album;
+    this.album = album.name;
+
+    var rawAvailabilityString = album.availability.territories;
+    var countryCodes = rawAvailabilityString.split(" ");
+
+    var countries = [];
+    for (var i = 0; i < countryCodes.length; i++) {
+        var countryCode = countryCodes[i];
+        var country = countryDictionary[countryCode];
+        countries.push(country);
+    }
+
+    this.numberOfRegions = countries.length;
+    this.regions = countries.sort();
+}
+
 function TrackViewModel() {
     var self = this;
 
@@ -27,7 +48,14 @@ function TrackViewModel() {
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + self.givenTrackName();
         $.ajax(searchTargetUrl).done(function(data) {
-            self.retrievedTracks(data.tracks);
+            var parsedTracks = [];
+            for (var i = 0; i < data.tracks.length; i++) {
+                var rawTrack = data.tracks[i];
+                var newModel = new Track(rawTrack);
+                parsedTracks.push(newModel);
+            }
+            self.retrievedTracks(parsedTracks);
+
             self.searchCompleted(true);
 
             var foundTracks = data.tracks.length > 0;
@@ -35,28 +63,8 @@ function TrackViewModel() {
                 return;
             }
 
-            var track = data.tracks[0];
-            var trackTitle = track.name;
-            var trackArtist = track.artists[0].name;
-
-            var album = track.album;
-            var rawAvailabilityString = album.availability.territories;
-            var countryCodes = rawAvailabilityString.split(" ");
-
-            var countries = [];
-            for (var i = 0; i < countryCodes.length; i++) {
-                var countryCode = countryCodes[i];
-                var country = countryDictionary[countryCode];
-                countries.push(country);
-            }
-
-            self.selectedTrack({
-                title: trackTitle,
-                artist: trackArtist,
-                album: album.name,
-                numberOfRegions: countries.length,
-                regions: countries.sort()
-            });
+            var track = parsedTracks[0];
+            self.selectedTrack(track);
         });
     };
 
