@@ -2,17 +2,29 @@ function TrackViewModel() {
     var self = this;
 
     self.givenTrackName = ko.observable("");
+
     self.selectedTrack = ko.observable({});
+
     self.retrievedTracks = ko.observableArray([]);
-    self.trackOnSpotify = ko.observable(false);
+    self.trackOnSpotify = ko.computed(function() {
+        return self.retrievedTracks().length > 0;
+    });
+    self.trackNotOnSpotify = ko.computed(function() {
+        return !self.trackOnSpotify();
+    });
+
+    self.searchCompleted = ko.observable(false);
+
 
     self.getTrackAvailability = function(formElement) {
+        self.searchCompleted(false);
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
-        var searchTargetUrl = spotifySearchEndpoint + this.givenTrackName();
+        var searchTargetUrl = spotifySearchEndpoint + self.givenTrackName();
         $.ajax(searchTargetUrl).done(function(data) {
             self.retrievedTracks(data.tracks);
+            self.searchCompleted(true);
+
             var foundTracks = data.tracks.length > 0;
-            self.trackOnSpotify(foundTracks);
             if (!foundTracks) {
                 return;
             }
