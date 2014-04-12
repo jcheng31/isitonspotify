@@ -7,7 +7,6 @@
 .track-detail:hover {
   cursor: pointer;
 }
-
-.region-map {
-  height: 600px;
+.center-text {
+  text-align: center;
 }
