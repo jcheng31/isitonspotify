@@ -23,9 +23,16 @@
       </form>
     </div>
     <div class="track-details-pane row">
-      <h3 data-bind="text: trackTitle"></h3>
-      <h3 data-bind="text: trackArtist"></h3>
-      <h3 data-bind="text: trackAvailability"></h3>
+      <h3>Track:
+        <span data-bind="text: trackTitle"></span>
+      </h3>
+      <h3>Artist:
+        <span data-bind="text: trackArtist"></span>
+      </h3>
+      <h3>Available in:</h3>
+      <div data-bind="foreach: trackAvailability">
+        <p data-bind="text: $data"></p>
+      </div>
     </div>
   </div>
 
