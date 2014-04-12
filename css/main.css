@@ -4,6 +4,9 @@
 .track-detail {
   border-bottom: 1px dotted;
 }
+.track-detail:hover {
+  cursor: pointer;
+}
 
 .region-map {
   height: 600px;
