@@ -51,6 +51,7 @@ App.ViewModels.TrackViewModel = function() {
         self.submittedTrackName(self.givenTrackName());
         var spotifySearchEndpoint = "http://ws.spotify.com/search/1/track.json?q=";
         var searchTargetUrl = spotifySearchEndpoint + self.givenTrackName();
+        
         $.ajax(searchTargetUrl).done(function(data) {
             var parsedTracks = [];
             for (var i = 0; i < data.tracks.length; i++) {
