@@ -247,5 +247,6 @@ var countryDictionary = {
     "EH": "Western Sahara",
     "YE": "Yemen",
     "ZM": "Zambia",
-    "ZW": "Zimbabwe"
+    "ZW": "Zimbabwe",
+    "worldwide": "Worldwide"
 };
