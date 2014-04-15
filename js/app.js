@@ -1,4 +1,8 @@
-function Track(track) {
+var App = {};
+App.Models = {};
+App.ViewModels = {};
+
+App.Models.Track = function(track) {
     this.title = track.name;
     this.artist = track.artists[0].name;
 
@@ -17,9 +21,9 @@ function Track(track) {
 
     this.numberOfRegions = countries.length;
     this.regions = countries.sort();
-}
+};
 
-function TrackViewModel() {
+App.ViewModels.TrackViewModel = function() {
     var self = this;
 
     self.givenTrackName = ko.observable("");
@@ -51,7 +55,7 @@ function TrackViewModel() {
             var parsedTracks = [];
             for (var i = 0; i < data.tracks.length; i++) {
                 var rawTrack = data.tracks[i];
-                var newModel = new Track(rawTrack);
+                var newModel = new App.Models.Track(rawTrack);
                 parsedTracks.push(newModel);
             }
             self.retrievedTracks(parsedTracks);
@@ -83,9 +87,9 @@ function TrackViewModel() {
         self.toggleAlternateTracks();
         self.selectedTrack(alternateTrack);
     };
-}
+};
 
 $(function() {
-    var viewModel = new TrackViewModel();
+    var viewModel = new App.ViewModels.TrackViewModel();
     ko.applyBindings(viewModel);
 });
