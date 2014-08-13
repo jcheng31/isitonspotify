@@ -67,7 +67,7 @@ App.ViewModels.TrackViewModel = function() {
 
 			self.searchCompleted(true);
 
-			var foundTracks = data.tracks.length > 0;
+			var foundTracks = data.tracks.items.length > 0;
 			if (!foundTracks) {
 				return;
 			}
