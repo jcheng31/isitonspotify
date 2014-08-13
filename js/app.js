@@ -58,8 +58,8 @@ App.ViewModels.TrackViewModel = function() {
 		
 		$.ajax(searchTargetUrl).done(function(data) {
 			var parsedTracks = [];
-			for (var i = 0; i < data.items.length; i++) {
-				var rawTrack = data.items[i];
+			for (var i = 0; i < data.tracks.items.length; i++) {
+				var rawTrack = data.tracks.items[i];
 				var newModel = new App.Models.Track(rawTrack);
 				parsedTracks.push(newModel);
 			}
