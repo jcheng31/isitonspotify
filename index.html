@@ -2,91 +2,97 @@
 <html>
 
 <head>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-49967934-1', 'jcheng31.github.io');
-    ga('send', 'pageview');
+		ga('create', 'UA-49967934-1', 'jcheng31.github.io');
+		ga('send', 'pageview');
 
-  </script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
-  <script type="text/javascript" src="./js/countries.js"></script>
-  <script type="text/javascript" src="./js/app.js"></script>
-  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="./css/main.css">
-  <link rel="icon" type="image/png" href="./favicon.png">
-  <title>Is it on Spotify?</title>
+	</script>
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
+	<script type="text/javascript" src="./js/countries.js"></script>
+	<script type="text/javascript" src="./js/app.js"></script>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<link rel="icon" type="image/png" href="./favicon.png">
+	<title>Is it on Spotify?</title>
 </head>
 
 <body>
-  <div class="container">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="row center-text">
-        <form data-bind="submit: getTrackAvailability">
-          <!-- TODO: more responsiveness. -->
-          <h1>
-            Is
-            <input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
-            available on Spotify?
-          </h1>
-          <input type="submit" style="display: none;" />
-        </form>
-      </div>
+	<div class="container">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row center-text">
+				<form data-bind="submit: getTrackAvailability">
+					<!-- TODO: more responsiveness. -->
+					<h1>
+						Is
+						<input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
+						available on Spotify?
+					</h1>
+					<input type="submit" style="display: none;" />
+				</form>
+			</div>
 
-      <div class="track-details-pane row center-text" data-bind="visible: searchCompleted">
-        <div data-bind="visible: trackNotOnSpotify">
-          <h1>
-            Nope,
-            <span class="highlight" data-bind="text: submittedTrackName"></span>
-            doesn't seem to be available.
-          </h1>
-        </div>
+			<div class="track-details-pane row center-text" data-bind="visible: searchCompleted">
+				<div data-bind="visible: trackNotOnSpotify">
+					<h1>
+						Nope,
+						<span class="highlight" data-bind="text: submittedTrackName"></span>
+						doesn't seem to be available.
+					</h1>
+				</div>
 
-        <div data-bind="visible: trackOnSpotify, with: selectedTrack">
-          <h1>
-            Yep!
-            <span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedTracks().length > 1 }, click: $parent.toggleAlternateTracks"></span>
-            by
-            <span class="highlight" data-bind="text: artist"></span>
-            (from
-            <span class="highlight" data-bind="text: album"></span>) is available in
-            <span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
-            regions.
-          </h1>
+				<div data-bind="visible: trackOnSpotify, with: selectedTrack">
+					<h1>
+						Yep!
+					</h1>
+					<h1>
+						<span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedTracks().length > 1 }, click: $parent.toggleAlternateTracks"></span>
+						by
+						<span class="highlight" data-bind="text: artist"></span>
+						is available in
+						<span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
+						regions.
+					</h1>
+					<h1>
+						It's from
+						<span class="highlight" data-bind="text: album"></span>.
+					</h1>
 
-          <div id="region-list" style="display: none;">
-            <h2>Here're all the places where it can be heard.</h2>
-            <div data-bind="foreach: regions">
-              <h4 data-bind="text: $data"></h4>
-            </div>
-          </div>
 
-          <div id="alternate-tracks" style="display: none;">
-            <h2>Not what you're looking for? Here are some other tracks we found.</h2>
-            <div data-bind="foreach: $root.retrievedTracks">
-              <h4 class="alternate-track" data-bind="click: $root.selectAlternateTrack">
-                <span data-bind="text: title"></span>
-                -
-                <span data-bind="text: artist"></span>
-                (<span data-bind="text: album"></span>)
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+					<div id="region-list" style="display: none;">
+						<h2>Here're all the places where it can be heard.</h2>
+						<div data-bind="foreach: regions">
+							<h4 data-bind="text: $data"></h4>
+						</div>
+					</div>
 
-  <footer class="center-text">
-    <p>
-      This product uses a SPOTIFY API but is not endorsed, certified or otherwise approved in any way by Spotify. Spotify is the registered trade mark of the Spotify Group.
-      <a href="https://github.com/jcheng31/isitonspotify">Source on GitHub.</a>
-    </p>
-  </footer>
+					<div id="alternate-tracks" style="display: none;">
+						<h2>Not what you're looking for? Here are some other tracks we found.</h2>
+						<div data-bind="foreach: $root.retrievedTracks">
+							<h4 class="alternate-track" data-bind="click: $root.selectAlternateTrack">
+								<span data-bind="text: title"></span>
+								-
+								<span data-bind="text: artist"></span>
+								(<span data-bind="text: album"></span>)
+							</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="center-text">
+		<p>
+			This product uses a SPOTIFY API but is not endorsed, certified or otherwise approved in any way by Spotify. Spotify is the registered trade mark of the Spotify Group.
+			<a href="https://github.com/jcheng31/isitonspotify">Source on GitHub.</a>
+		</p>
+	</footer>
 </body>
 
 </html>
