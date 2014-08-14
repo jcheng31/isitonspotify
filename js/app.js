@@ -53,7 +53,7 @@ App.ViewModels.TrackViewModel = function() {
 		}
 
 		self.submittedTrackName(self.givenTrackName());
-		var spotifySearchEndpoint = "//api.spotify.com/v1/search?type=track&q=";
+		var spotifySearchEndpoint = "https://api.spotify.com/v1/search?type=track&q=";
 		var searchTargetUrl = spotifySearchEndpoint + '"' + self.givenTrackName() + '"';
 		
 		$.ajax(searchTargetUrl).done(function(data) {
