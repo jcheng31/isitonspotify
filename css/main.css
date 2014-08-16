@@ -1,6 +1,14 @@
-
-h1,h2,h3,h4,h5,h6,p,ul,ol,li {
+body {
+    background: #263248;
+}
+h1,h2,h3,h4,h5,h6,p,ul,ol,li,div {
     font-family: 'Alegreya Sans', sans-serif;
+    color: #FFFFFF;
+}
+input {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px dashed #FFFFFF;
 }
 .container {
     margin-bottom: 20px;
@@ -23,12 +31,23 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 }
 .alternate-track:hover {
     cursor: pointer;
-    background: #ebfafe;
+    background: #43597F;
 }
 @media(min-width: 640px) {
     .center-text {
         text-align: center;
     }
+}
+.search-button {
+    border-radius: 0;
+    margin-top: 20px;
+    font-size: 24pt;
+    background: #263248;
+    color: #FFFFFF;
+}
+.search-button:hover {
+    background: #43597F;
+    color: #FFFFFF;
 }
 footer {
     background: white;

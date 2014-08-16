@@ -30,11 +30,11 @@
 				<form data-bind="submit: getTrackAvailability">
 					<!-- TODO: more responsiveness. -->
 					<h1>
-						Is
-						<input placeholder="track name" data-bind="value: givenTrackName, valueUpdate: 'input'"></input>
-						available on Spotify?
+						There's this track called
+						<input placeholder="name" data-bind="value: givenTrackName, valueUpdate: 'input'" />
+						.
 					</h1>
-					<input type="submit" style="display: none;" />
+					<input type="submit" class="search-button btn btn-default" value="Is it on Spotify?" />
 				</form>
 			</div>
 
