@@ -56,18 +56,18 @@
 						by
 						<span class="highlight" data-bind="text: artist"></span>
 						is available in
-						<span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
+						<span class="highlight track-detail" data-bind="text: album.numberOfRegions, click: $parent.toggleRegions"></span>
 						regions.
 					</h1>
 					<h1>
 						It's from
-						<span class="highlight" data-bind="text: album"></span>.
+						<span class="highlight" data-bind="text: album.name"></span>.
 					</h1>
 
 
 					<div id="region-list" style="display: none;">
 						<h2>Here're all the places where it can be heard.</h2>
-						<div data-bind="foreach: regions">
+						<div data-bind="foreach: album.regions">
 							<h4 data-bind="text: $data"></h4>
 						</div>
 					</div>

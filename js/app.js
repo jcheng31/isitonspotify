@@ -12,7 +12,11 @@ App.Models.Track = function(track) {
 	this.artist = artists.join(", ");
 
 	var album = track.album;
-	this.album = album.name;
+	this.album = new App.Models.Album(track.album)
+};
+
+App.Models.Album = function(album) {
+	this.name = album.name;
 
 	var countryCodes = album.available_markets;
 
