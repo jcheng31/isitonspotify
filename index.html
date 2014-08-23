@@ -27,11 +27,17 @@
 	<div class="container">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="row center-text home">
-				<form data-bind="submit: getTrackAvailability">
+				<form data-bind="submit: search">
 					<!-- TODO: more responsiveness. -->
 					<h1>
-						There's a track called
-						<input placeholder="name" data-bind="value: givenTrackName, valueUpdate: 'input'" />
+						There's 
+						<select data-bind="value: queryType, valueUpdate: 'input'">
+							<option value="track">a track</option>
+							<option value="album">an album</option>
+						</select>
+
+						called
+						<input placeholder="name" data-bind="value: givenName, valueUpdate: 'input'" />
 						.
 					</h1>
 					<input type="submit" class="search-button btn btn-default" value="Is it on Spotify?" />
@@ -39,20 +45,20 @@
 			</div>
 
 			<div class="track-details-pane row center-text" data-bind="visible: searchCompleted">
-				<div data-bind="visible: trackNotOnSpotify">
+				<div data-bind="visible: itemNotOnSpotify" style="display: none;">
 					<h1>
 						Nope,
-						<span class="highlight" data-bind="text: submittedTrackName"></span>
+						<span class="highlight" data-bind="text: submittedName"></span>
 						doesn't seem to be available.
 					</h1>
 				</div>
 
-				<div data-bind="visible: trackOnSpotify, with: selectedTrack">
+				<div data-bind="visible: itemOnSpotify && isTrack, with: selectedItem" style="display: none;">
 					<h1>
 						Yep!
 					</h1>
 					<h1>
-						<span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedTracks().length > 1 }, click: $parent.toggleAlternateTracks"></span>
+						<span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedItems().length > 1 }, click: $parent.toggleAlternateTracks"></span>
 						by
 						<span class="highlight" data-bind="text: artist"></span>
 						is available in
@@ -74,7 +80,7 @@
 
 					<div id="alternate-tracks" style="display: none;">
 						<h2>Not what you're looking for? Here are some other tracks we found.</h2>
-						<div data-bind="foreach: $root.retrievedTracks">
+						<div data-bind="foreach: $root.retrievedItems">
 							<h4 class="alternate-track" data-bind="click: $root.selectAlternateTrack">
 								<span data-bind="text: title"></span>
 								-
@@ -84,16 +90,31 @@
 						</div>
 					</div>
 				</div>
+
+				<div data-bind="visible: itemOnSpotify && !isTrack, with: selectedItem" style="display: none;">
+					<h1>
+						Yep!
+					</h1>
+					<h1>
+						<span class="highlight" data-bind="text: name, css: { 'track-detail' : $parent.retrievedItems().length > 1 }, click: $parent.toggleAlternateAlbums"></span>
+						is available in
+
+						<span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
+						regions.
+
+					</h1>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<footer class="center-text">
-		<p>
-			This website is not endorsed, certified or otherwise approved in any way by Spotify. Spotify is the registered trade mark of the Spotify Group.
-			<a href="https://github.com/jcheng31/isitonspotify">Source on GitHub.</a>
-		</p>
-	</footer>
+<footer class="center-text">
+	<p>
+		This website is not endorsed, certified or otherwise approved in any way by Spotify. Spotify is the registered trade mark of the Spotify Group.
+		<a href="https://github.com/jcheng31/isitonspotify">Source on GitHub.</a>
+	</p>
+</footer>
 </body>
 
 </html>

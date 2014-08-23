@@ -12,7 +12,7 @@ App.Models.Track = function(track) {
 	this.artist = artists.join(", ");
 
 	var album = track.album;
-	this.album = new App.Models.Album(track.album)
+	this.album = new App.Models.Album(track.album);
 };
 
 App.Models.Album = function(album) {
@@ -31,34 +31,81 @@ App.Models.Album = function(album) {
 	this.regions = countries.sort();
 };
 
-App.ViewModels.TrackViewModel = function() {
+App.ViewModels.MainViewModel = function() {
 	var self = this;
 
-	self.givenTrackName = ko.observable("");
-	self.submittedTrackName = ko.observable("");
+	self.givenName = ko.observable("");
+	self.submittedName = ko.observable("");
 
-	self.selectedTrack = ko.observable({});
-
-	self.retrievedTracks = ko.observableArray([]);
-	self.trackOnSpotify = ko.computed(function() {
-		return self.retrievedTracks().length > 0;
+	self.queryType = ko.observable("");
+	self.isTrack = ko.computed(function() {
+		return self.queryType() === 'track';
 	});
-	self.trackNotOnSpotify = ko.computed(function() {
-		return !self.trackOnSpotify();
+
+	self.selectedItem = ko.observable({});
+
+	self.retrievedItems = ko.observableArray([]);
+	self.itemOnSpotify = ko.computed(function() {
+		return self.retrievedItems().length > 0;
+	});
+	self.itemNotOnSpotify = ko.computed(function() {
+		return !self.itemOnSpotify();
 	});
 
 	self.searchCompleted = ko.observable(false);
 
+	self.search = function(formElement) {
+		if (self.queryType() == 'track') {
+			self.getTrackAvailability(formElement);
+		} else {
+			self.getAlbumAvailability(formElement);
+		}
+	};
 
-	self.getTrackAvailability = function(formElement) {
+	self.getAlbumAvailability = function(formElement) {
 		self.searchCompleted(false);
-		if (self.givenTrackName().length === 0) {
+		self.retrievedItems([]);
+		self.selectedItem(null);
+		if (self.givenName().length === 0) {
 			return;
 		}
 
-		self.submittedTrackName(self.givenTrackName());
+		self.submittedName(self.givenName());
+		var spotifySearchEndpoint = "https://api.spotify.com/v1/search?type=album&q=";
+		var searchTargetUrl = spotifySearchEndpoint + '"' + self.givenName() + '"';
+
+		$.ajax(searchTargetUrl).done(function(data) {
+			var parsedAlbums = [];
+			for (var i = 0; i < data.albums.items.length; i++) {
+				var json = data.albums.items[i];
+				var model = new App.Models.Album(json);
+				parsedAlbums.push(model);
+			}
+
+			self.retrievedItems(parsedAlbums);
+			self.searchCompleted(true);
+
+			var foundAlbums = data.albums.items.length > 0;
+			if (!foundAlbums) {
+				return;
+			}
+
+			self.selectedItem(parsedAlbums[0]);
+		});
+	};
+
+
+	self.getTrackAvailability = function(formElement) {
+		self.searchCompleted(false);
+		self.retrievedItems([]);
+		self.selectedItem(null);
+		if (self.givenName().length === 0) {
+			return;
+		}
+
+		self.submittedName(self.givenName());
 		var spotifySearchEndpoint = "https://api.spotify.com/v1/search?type=track&q=";
-		var searchTargetUrl = spotifySearchEndpoint + '"' + self.givenTrackName() + '"';
+		var searchTargetUrl = spotifySearchEndpoint + '"' + self.givenName() + '"';
 		
 		$.ajax(searchTargetUrl).done(function(data) {
 			var parsedTracks = [];
@@ -67,7 +114,7 @@ App.ViewModels.TrackViewModel = function() {
 				var newModel = new App.Models.Track(rawTrack);
 				parsedTracks.push(newModel);
 			}
-			self.retrievedTracks(parsedTracks);
+			self.retrievedItems(parsedTracks);
 
 			self.searchCompleted(true);
 
@@ -77,7 +124,7 @@ App.ViewModels.TrackViewModel = function() {
 			}
 
 			var track = parsedTracks[0];
-			self.selectedTrack(track);
+			self.selectedItem(track);
 		});
 	};
 
@@ -86,7 +133,7 @@ App.ViewModels.TrackViewModel = function() {
 	};
 
 	self.toggleAlternateTracks = function() {
-		if (self.retrievedTracks().length <= 1) {
+		if (self.retrievedItems().length <= 1) {
 			return;
 		}
 		$("#alternate-tracks").slideToggle();
@@ -94,11 +141,11 @@ App.ViewModels.TrackViewModel = function() {
 
 	self.selectAlternateTrack = function(alternateTrack) {
 		self.toggleAlternateTracks();
-		self.selectedTrack(alternateTrack);
+		self.selectedItem(alternateTrack);
 	};
 };
 
 $(function() {
-	var viewModel = new App.ViewModels.TrackViewModel();
+	var viewModel = new App.ViewModels.MainViewModel();
 	ko.applyBindings(viewModel);
 });
