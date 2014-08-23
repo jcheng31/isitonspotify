@@ -42,14 +42,11 @@ App.ViewModels.MainViewModel = function() {
 		return self.queryType() === 'track';
 	});
 
-	self.selectedItem = ko.observable({});
+	self.selectedItem = ko.observable(null);
 
 	self.retrievedItems = ko.observableArray([]);
 	self.itemOnSpotify = ko.computed(function() {
 		return self.retrievedItems().length > 0;
-	});
-	self.itemNotOnSpotify = ko.computed(function() {
-		return !self.itemOnSpotify();
 	});
 
 	self.searchCompleted = ko.observable(false);
@@ -132,20 +129,23 @@ App.ViewModels.MainViewModel = function() {
 		$("#region-list").slideToggle();
 	};
 
-	self.toggleAlternateTracks = function() {
+	self.toggleAlternatives = function() {
 		if (self.retrievedItems().length <= 1) {
 			return;
 		}
-		$("#alternate-tracks").slideToggle();
+		$("#alternatives").slideToggle();
 	};
 
-	self.selectAlternateTrack = function(alternateTrack) {
-		self.toggleAlternateTracks();
-		self.selectedItem(alternateTrack);
+	self.selectAlternative = function(alternative) {
+		self.toggleAlternatives();
+		self.selectedItem(alternative);
 	};
 };
 
 $(function() {
 	var viewModel = new App.ViewModels.MainViewModel();
 	ko.applyBindings(viewModel);
+	viewModel.queryType.subscribe(function(value) {
+		viewModel.searchCompleted(false);
+	});
 });

@@ -14,7 +14,6 @@ select {
     background: transparent;
     border: 0;
     border-bottom: 1px dashed white;
-    -moz-appearance: none;
 }
 .container {
     margin-bottom: 20px;
@@ -31,11 +30,11 @@ select {
 .track-detail:hover {
     cursor: pointer;
 }
-.alternate-track {
+.alternate-option {
     margin: -10px;
     padding: 10px;
 }
-.alternate-track:hover {
+.alternate-option:hover {
     cursor: pointer;
     background: #43597F;
 }
