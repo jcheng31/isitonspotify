@@ -80,14 +80,7 @@ App.ViewModels.MainViewModel = function() {
 		}
 
 		self.retrievedItems(parsedAlbums);
-		self.searchCompleted(true);
-
-		var foundAlbums = data.albums.items.length > 0;
-		if (!foundAlbums) {
-			return;
-		}
-
-		self.selectedItem(parsedAlbums[0]);
+		self.parseComplete();
 	};
 
 	self.trackParser = function(data) {
@@ -98,16 +91,15 @@ App.ViewModels.MainViewModel = function() {
 			parsedTracks.push(newModel);
 		}
 		self.retrievedItems(parsedTracks);
+		self.parseComplete();
+	};
 
+	self.parseComplete = function() {
 		self.searchCompleted(true);
-
-		var foundTracks = data.tracks.items.length > 0;
-		if (!foundTracks) {
+		if (!self.itemOnSpotify()) {
 			return;
 		}
-
-		var track = parsedTracks[0];
-		self.selectedItem(track);
+		self.selectedItem(self.retrievedItems()[0]);
 	};
 
 	self.toggleRegions = function() {
