@@ -72,3 +72,22 @@ footer p {
 .detail-second-row{
     margin-top: -12px;
 }
+
+@keyframes animateIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-in {
+    animation: animateIn 1s;
+}
+
+.short-scroll {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+

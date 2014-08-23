@@ -117,12 +117,16 @@ App.ViewModels.MainViewModel = function() {
 		self.toggleAlternatives();
 		self.selectedItem(alternative);
 	};
+
+	self.reset = function() {
+		self.selectedItem(null);
+		self.givenName("");
+		self.retrievedItems([]);
+		self.searchCompleted(false);
+	};
 };
 
 $(function() {
 	var viewModel = new App.ViewModels.MainViewModel();
 	ko.applyBindings(viewModel);
-	viewModel.queryType.subscribe(function(value) {
-		viewModel.searchCompleted(false);
-	}, null, 'beforeChange');
 });

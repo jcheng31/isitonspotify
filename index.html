@@ -27,115 +27,125 @@
 <body>
 	<div class="container">
 		<div class="col-md-10 col-md-offset-1">
-			<div class="row center-text home">
-				<form data-bind="submit: search">
-					<!-- TODO: more responsiveness. -->
-					<h1>
-						There's 
-						<select data-bind="value: queryType, valueUpdate: 'input'">
-							<option value="track">a track</option>
-							<option value="album">an album</option>
-						</select>
+			<div data-bind="ifnot: searchCompleted">
+				<div class="row center-text home">
+					<form data-bind="submit: search">
+						<!-- TODO: more responsiveness. -->
+						<h1>
+							There's 
+							<select data-bind="value: queryType, valueUpdate: 'input'">
+								<option value="track">a track</option>
+								<option value="album">an album</option>
+							</select>
 
-						called
+							called
 
-						<input placeholder="name" autofocus data-bind="value: givenName, valueUpdate: 'input'" />
-						.
-					</h1>
-					<input type="submit" class="search-button btn btn-default" value="Is it on Spotify?" />
-				</form>
+							<input placeholder="name" autofocus data-bind="value: givenName, valueUpdate: 'input'" />
+							.
+						</h1>
+						<input type="submit" class="search-button btn btn-default" value="Is it on Spotify?" />
+					</form>
+				</div>
 			</div>
 
 			<div class="track-details-pane row center-text" data-bind="if: searchCompleted">
-				<div data-bind="ifnot: itemOnSpotify">
-					<h1>
-						Nope,
-						<span class="highlight" data-bind="text: submittedName"></span>
-						doesn't seem to be available.
-					</h1>
-				</div>
+				<div class="animate-in">
+					<div data-bind="ifnot: itemOnSpotify">
+						<h1>
+							Nope,
+							<span class="highlight" data-bind="text: submittedName"></span>
+							doesn't seem to be available.
+						</h1>
+					</div>
 
-				<div data-bind="if: itemOnSpotify">
-					<h1>
-						Yep!
-					</h1>
+					<div data-bind="if: itemOnSpotify">
+						<h1>
+							Yep!
+						</h1>
 
-					<div data-bind="with: selectedItem">
-						<div data-bind="if: $parent.isTrack">
-							<h1>
-								<span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedItems().length > 1 }, click: $parent.toggleAlternatives"></span>
-								by
-								<span class="highlight" data-bind="text: artist"></span>
-								is available in
-								<span class="highlight track-detail" data-bind="text: album.numberOfRegions, click: $parent.toggleRegions"></span>
-								regions.
-							</h1>
-							<h1>
-								It's from
-								<span class="highlight" data-bind="text: album.name"></span>.
-							</h1>
-						</div>
+						<div data-bind="with: selectedItem">
+							<div data-bind="if: $parent.isTrack">
+								<h1>
+									<span class="highlight" data-bind="text: title, css: { 'track-detail': $parent.retrievedItems().length > 1 }, click: $parent.toggleAlternatives"></span>
+									by
+									<span class="highlight" data-bind="text: artist"></span>
+									is available in
+									<span class="highlight track-detail" data-bind="text: album.numberOfRegions, click: $parent.toggleRegions"></span>
+									regions.
+								</h1>
+								<h1>
+									It's from
+									<span class="highlight" data-bind="text: album.name"></span>.
+								</h1>
+							</div>
 
-						<div data-bind="ifnot: $parent.isTrack">
-							<h1>
-								<span class="highlight" data-bind="text: name, css: { 'track-detail' : $parent.retrievedItems().length > 1 }, click: $parent.toggleAlternatives"></span>
-								is available in
+							<div data-bind="ifnot: $parent.isTrack">
+								<h1>
+									<span class="highlight" data-bind="text: name, css: { 'track-detail' : $parent.retrievedItems().length > 1 }, click: $parent.toggleAlternatives"></span>
+									is available in
 
-								<span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
-								regions.
-							</h1>
-						</div>
+									<span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
+									regions.
+								</h1>
+							</div>
 
-						<div id="alternatives" style="display: none;">
-							<h2>
-								Not what you're looking for? Here are some other
+							<div id="alternatives" style="display: none;">
+								<h2>
+									Not what you're looking for? Here are some other
 
-								<span data-bind="text: $parent.queryType"></span>s
-								
-								we found.
-							</h2>
+									<span data-bind="text: $parent.queryType"></span>s
 
-							<div data-bind="foreach: $root.retrievedItems">
-								<div class="row alternate-option" data-bind="click: $root.selectAlternative">
-									<div class="col-md-8 col-md-offset-2">
-										<div data-bind="if: $root.isTrack">
-											<h4>
-												<span class="highlight" data-bind="text: title"></span>
-											</h4>
-											<div class="detail-second-row">
-												<span data-bind="text: artist"></span>
+									we found.
+								</h2>
 
-												<span class="album-name" data-bind="text: album.name"></span>
+								<div class="short-scroll" data-bind="foreach: $root.retrievedItems">
+									<div class="row alternate-option" data-bind="click: $root.selectAlternative">
+										<div class="col-md-8 col-md-offset-2">
+											<div data-bind="if: $root.isTrack">
+												<h4>
+													<span class="highlight" data-bind="text: title"></span>
+												</h4>
+												<div class="detail-second-row">
+													<span data-bind="text: artist"></span>
+
+													<span class="album-name" data-bind="text: album.name"></span>
+												</div>
 											</div>
+
+											<div data-bind="ifnot: $root.isTrack">
+												<div class="col-md-2">
+													<img data-bind="attr: {src: image}" />
+												</div>
+												<h4 class="col-md-10">
+													<span class="highlight" data-bind="text: name"></span>
+												</h4>
+											</div>							
 										</div>
+									</div>
+								</div>
+							</div>
 
-										<div data-bind="ifnot: $root.isTrack">
-											<div class="col-md-2">
-												<img data-bind="attr: {src: image}" />
-											</div>
-											<h4 class="col-md-10">
-												<span class="highlight" data-bind="text: name"></span>
-											</h4>
-										</div>							
+							<div id="region-list" style="display: none;">
+								<h2>Here're all the places it's available in.</h2>
+								<div class="short-scroll">
+									<div data-bind="if: $parent.isTrack">
+										<div data-bind="foreach: album.regions">
+											<h4 data-bind="text: $data"></h4>
+										</div>
+									</div>
+
+									<div data-bind="ifnot: $parent.isTrack">
+										<div data-bind="foreach: regions">
+											<h4 data-bind="text: $data"></h4>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 
-						<div id="region-list" style="display: none;">
-							<h2>Here're all the places it's available in.</h2>
-							<div data-bind="if: $parent.isTrack">
-								<div data-bind="foreach: album.regions">
-									<h4 data-bind="text: $data"></h4>
-								</div>
-							</div>
-
-							<div data-bind="ifnot: $parent.isTrack">
-								<div data-bind="foreach: regions">
-									<h4 data-bind="text: $data"></h4>
-								</div>
-							</div>
-						</div>
+					<div class="search-button btn btn-default" data-bind="click: reset">
+						Find something else.
 					</div>
 				</div>
 			</div>
