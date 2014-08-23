@@ -56,14 +56,6 @@ App.ViewModels.MainViewModel = function() {
 	self.searchCompleted = ko.observable(false);
 
 	self.search = function(formElement) {
-		if (self.queryType() == 'track') {
-			self.getTrackAvailability(formElement);
-		} else {
-			self.getAlbumAvailability(formElement);
-		}
-	};
-
-	self.getAlbumAvailability = function(formElement) {
 		self.searchCompleted(false);
 		self.retrievedItems([]);
 		self.selectedItem(null);
@@ -72,61 +64,50 @@ App.ViewModels.MainViewModel = function() {
 		}
 
 		self.submittedName(self.givenName());
-		var spotifySearchEndpoint = "https://api.spotify.com/v1/search?type=album&q=";
-		var searchTargetUrl = spotifySearchEndpoint + '"' + self.givenName() + '"';
+		var endpointBase = "https://api.spotify.com/v1/search?type=";
+		var searchTargetUrl = endpointBase + self.queryType() + '&q="' + self.givenName() + '"';
 
-		$.ajax(searchTargetUrl).done(function(data) {
-			var parsedAlbums = [];
-			for (var i = 0; i < data.albums.items.length; i++) {
-				var json = data.albums.items[i];
-				var model = new App.Models.Album(json);
-				parsedAlbums.push(model);
-			}
-
-			self.retrievedItems(parsedAlbums);
-			self.searchCompleted(true);
-
-			var foundAlbums = data.albums.items.length > 0;
-			if (!foundAlbums) {
-				return;
-			}
-
-			self.selectedItem(parsedAlbums[0]);
-		});
+		var parser = self.isTrack() ? self.trackParser : self.albumParser;
+		$.ajax(searchTargetUrl).done(parser);
 	};
 
+	self.albumParser = function(data) {
+		var parsedAlbums = [];
+		for (var i = 0; i < data.albums.items.length; i++) {
+			var json = data.albums.items[i];
+			var model = new App.Models.Album(json);
+			parsedAlbums.push(model);
+		}
 
-	self.getTrackAvailability = function(formElement) {
-		self.searchCompleted(false);
-		self.retrievedItems([]);
-		self.selectedItem(null);
-		if (self.givenName().length === 0) {
+		self.retrievedItems(parsedAlbums);
+		self.searchCompleted(true);
+
+		var foundAlbums = data.albums.items.length > 0;
+		if (!foundAlbums) {
 			return;
 		}
 
-		self.submittedName(self.givenName());
-		var spotifySearchEndpoint = "https://api.spotify.com/v1/search?type=track&q=";
-		var searchTargetUrl = spotifySearchEndpoint + '"' + self.givenName() + '"';
-		
-		$.ajax(searchTargetUrl).done(function(data) {
-			var parsedTracks = [];
-			for (var i = 0; i < data.tracks.items.length; i++) {
-				var rawTrack = data.tracks.items[i];
-				var newModel = new App.Models.Track(rawTrack);
-				parsedTracks.push(newModel);
-			}
-			self.retrievedItems(parsedTracks);
+		self.selectedItem(parsedAlbums[0]);
+	};
 
-			self.searchCompleted(true);
+	self.trackParser = function(data) {
+		var parsedTracks = [];
+		for (var i = 0; i < data.tracks.items.length; i++) {
+			var rawTrack = data.tracks.items[i];
+			var newModel = new App.Models.Track(rawTrack);
+			parsedTracks.push(newModel);
+		}
+		self.retrievedItems(parsedTracks);
 
-			var foundTracks = data.tracks.items.length > 0;
-			if (!foundTracks) {
-				return;
-			}
+		self.searchCompleted(true);
 
-			var track = parsedTracks[0];
-			self.selectedItem(track);
-		});
+		var foundTracks = data.tracks.items.length > 0;
+		if (!foundTracks) {
+			return;
+		}
+
+		var track = parsedTracks[0];
+		self.selectedItem(track);
 	};
 
 	self.toggleRegions = function() {
