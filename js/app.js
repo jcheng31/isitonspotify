@@ -17,6 +17,10 @@ App.Models.Track = function(track) {
 
 App.Models.Album = function(album) {
 	this.name = album.name;
+	this.image = "";
+	if (album.images.length > 0) {
+		this.image = album.images[album.images.length - 1].url;
+	}
 
 	var countryCodes = album.available_markets;
 

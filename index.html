@@ -93,19 +93,31 @@
 								
 								we found.
 							</h2>
-							<div data-bind="foreach: $root.retrievedItems">
-								<h4 class="alternate-option" data-bind="click: $root.selectAlternative">
-									<div data-bind="if: $root.isTrack">
-										<span data-bind="text: title"></span>
-										-
-										<span data-bind="text: artist"></span>
-										(<span data-bind="text: album.name"></span>)
-									</div>
 
-									<div data-bind="ifnot: $root.isTrack">
-										<span data-bind="text: name"></span>
-									</div>							
-								</h4>
+							<div data-bind="foreach: $root.retrievedItems">
+								<div class="row alternate-option" data-bind="click: $root.selectAlternative">
+									<div class="col-md-8 col-md-offset-2">
+										<div data-bind="if: $root.isTrack">
+											<h4>
+												<span class="track-name" data-bind="text: title"></span>
+											</h4>
+											<div class="detail-second-row">
+												<span data-bind="text: artist"></span>
+												 - 
+												<span class="album-name" data-bind="text: album.name"></span>
+											</div>
+										</div>
+
+										<div data-bind="ifnot: $root.isTrack">
+											<div class="col-md-2">
+												<img data-bind="attr: {src: image}" />
+											</div>
+											<h4 class="col-md-10">
+												<span data-bind="text: name"></span>
+											</h4>
+										</div>							
+									</div>
+								</div>
 							</div>
 						</div>
 

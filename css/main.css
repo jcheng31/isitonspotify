@@ -31,8 +31,8 @@ select {
     cursor: pointer;
 }
 .alternate-option {
-    margin: -10px;
-    padding: 10px;
+    text-align: left;
+    margin: 0;
 }
 .alternate-option:hover {
     cursor: pointer;
@@ -65,4 +65,14 @@ footer {
 footer p {
     margin: 0;
     color: black;
+}
+.album-name {
+  font-style: italic;
+  color: #AAAAAA;
+}
+.detail-second-row{
+    margin-top: -12px;
+}
+.track-name {
+    font-weight: 800;
 }
