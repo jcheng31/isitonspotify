@@ -67,12 +67,8 @@ footer p {
     color: black;
 }
 .album-name {
-  font-style: italic;
-  color: #AAAAAA;
+    color: #AAAAAA;
 }
 .detail-second-row{
     margin-top: -12px;
-}
-.track-name {
-    font-weight: 800;
 }
