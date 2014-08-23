@@ -10,6 +10,12 @@ input {
     border: 0;
     border-bottom: 1px dashed #FFFFFF;
 }
+select {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px dashed white;
+    -moz-appearance: none;
+}
 .container {
     margin-bottom: 20px;
 }
