@@ -147,5 +147,5 @@ $(function() {
 	ko.applyBindings(viewModel);
 	viewModel.queryType.subscribe(function(value) {
 		viewModel.searchCompleted(false);
-	});
+	}, null, 'beforeChange');
 });
