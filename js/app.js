@@ -5,6 +5,9 @@ App.ViewModels = {};
 App.Models.Track = function(track) {
 	this.title = track.name;
 
+	this.uri = track.uri;
+	this.href = track.external_urls.spotify;
+
 	var artists = [];
 	for (var i = 0; i < track.artists.length; i++) {
 		artists.push(track.artists[i].name);
