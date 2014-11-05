@@ -54,6 +54,12 @@ select {
     background: #43597F;
     color: #FFFFFF;
 }
+.play-link {
+	color: #FFFFFF;
+}
+.play-link:hover {
+	text-decoration: none;
+}
 footer {
     background: white;
     position: fixed;
