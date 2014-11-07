@@ -77,11 +77,6 @@
 									It's from
 									<span class="highlight" data-bind="text: album.name"></span>.
 								</h1>
-								<p>
-									<a target="_blank" data-bind="attr: { href: uri }">&#x25b6; Spotify</a>
-									&nbsp; &nbsp; &nbsp;
-									<a target="_blank" data-bind="attr: { href: href }">&#x25b6; Spotify Web Player</a>
-								</p>
 							</div>
 
 							<div data-bind="ifnot: $parent.isTrack">
@@ -92,6 +87,12 @@
 									<span class="highlight track-detail" data-bind="text: numberOfRegions, click: $parent.toggleRegions"></span>
 									regions.
 								</h1>
+							</div>
+
+							<div>
+								<a target="_blank" class="play-link" data-bind="attr: { href: uri }">&#x25b6; Spotify</a>
+								&nbsp; &nbsp; &nbsp;
+								<a target="_blank" class="play-link" data-bind="attr: { href: href }">&#x25b6; Spotify Web Player</a>
 							</div>
 
 							<div id="alternatives" style="display: none;">

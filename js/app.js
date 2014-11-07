@@ -25,6 +25,9 @@ App.Models.Album = function(album) {
 		this.image = album.images[album.images.length - 1].url;
 	}
 
+	this.uri = album.uri;
+	this.href = album.external_urls.spotify;
+
 	var countryCodes = album.available_markets;
 
 	var countries = [];
