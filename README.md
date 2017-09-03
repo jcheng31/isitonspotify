@@ -4,12 +4,10 @@
 
 A simple website to check if a track or album is on Spotify, and if so, where it can be heard. Uses [knockout.js](http://knockoutjs.com/), [jQuery](https://jquery.com/), and [Bootstrap](http://getbootstrap.com/).
 
-Check it out [here.](http://jcheng31.github.io/isitonspotify)
-
 # License
 The MIT License (MIT)
 
-Copyright (c) 2014 Jerome Cheng
+Copyright (c) Jerome Cheng
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
